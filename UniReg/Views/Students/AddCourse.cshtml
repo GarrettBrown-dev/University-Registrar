@@ -4,16 +4,13 @@
 
 @model UniReg.Models.Student
 
-<h2>Edit</h2>
+<h2>Add a course</h2>
 
-<h4>Edit this student's info: @Html.DisplayFor(model => model.Name)</h4>
+<h4>Add a course for this student: @Html.DisplayFor(model => model.Name)</h4>
 
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.StudentId)
-
-    @Html.LabelFor(model => model.Name)
-    @Html.EditorFor(model => model.Name)
 
     @Html.Label("Select course")
     @Html.DropDownList("CourseId")
@@ -21,4 +18,4 @@
     <input type="submit" value="Save" />
 }
 
-<p>@Html.ActionLink("Back to students", "Index")</p>
+<p>@Html.ActionLink("Back to student list", "Index")</p>
