@@ -8,8 +8,8 @@ using UniReg.Models;
 namespace UniReg.Migrations
 {
     [DbContext(typeof(UniRegContext))]
-    [Migration("20210105193428_DepCour")]
-    partial class DepCour
+    [Migration("20210105222905_ReInit")]
+    partial class ReInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace UniReg.Migrations
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("CourseName");
 
                     b.HasKey("CourseId");
 
@@ -37,7 +37,11 @@ namespace UniReg.Migrations
 
                     b.Property<int>("CourseId");
 
+                    b.Property<string>("CourseName");
+
                     b.Property<int>("StudentId");
+
+                    b.Property<string>("StudentName");
 
                     b.HasKey("CourseStudentId");
 
@@ -53,7 +57,7 @@ namespace UniReg.Migrations
                     b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("DepartmentName");
 
                     b.HasKey("DepartmentId");
 
@@ -67,7 +71,11 @@ namespace UniReg.Migrations
 
                     b.Property<int>("CourseId");
 
+                    b.Property<string>("CourseName");
+
                     b.Property<int>("DepartmentId");
+
+                    b.Property<string>("DepartmentName");
 
                     b.HasKey("DepartmentCourseId");
 
@@ -78,36 +86,12 @@ namespace UniReg.Migrations
                     b.ToTable("DepartmentCourse");
                 });
 
-            modelBuilder.Entity("UniReg.Models.DepartmentCourseStudent", b =>
-                {
-                    b.Property<int>("DepartmentCourseStudentId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CourseId");
-
-                    b.Property<int>("CourseStudentId");
-
-                    b.Property<int>("DepartmentId");
-
-                    b.Property<int>("StudentId");
-
-                    b.HasKey("DepartmentCourseStudentId");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("DepartmentCourseStudent");
-                });
-
             modelBuilder.Entity("UniReg.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("StudentName");
 
                     b.HasKey("StudentId");
 
@@ -135,26 +119,8 @@ namespace UniReg.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("UniReg.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("UniReg.Models.DepartmentCourseStudent", b =>
-                {
-                    b.HasOne("UniReg.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("UniReg.Models.Department", "Department")
                         .WithMany("Courses")
                         .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("UniReg.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

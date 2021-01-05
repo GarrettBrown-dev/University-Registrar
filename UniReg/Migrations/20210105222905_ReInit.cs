@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UniReg.Migrations
 {
-    public partial class Initial : Migration
+    public partial class ReInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +13,24 @@ namespace UniReg.Migrations
                 {
                     CourseId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    CourseName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.CourseId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Departments",
+                columns: table => new
+                {
+                    DepartmentId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DepartmentName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departments", x => x.DepartmentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -26,11 +39,39 @@ namespace UniReg.Migrations
                 {
                     StudentId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    StudentName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.StudentId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DepartmentCourse",
+                columns: table => new
+                {
+                    DepartmentCourseId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DepartmentId = table.Column<int>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false),
+                    DepartmentName = table.Column<string>(nullable: true),
+                    CourseName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DepartmentCourse", x => x.DepartmentCourseId);
+                    table.ForeignKey(
+                        name: "FK_DepartmentCourse_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "CourseId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DepartmentCourse_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -40,7 +81,9 @@ namespace UniReg.Migrations
                     CourseStudentId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     StudentId = table.Column<int>(nullable: false),
-                    CourseId = table.Column<int>(nullable: false)
+                    CourseId = table.Column<int>(nullable: false),
+                    CourseName = table.Column<string>(nullable: true),
+                    StudentName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,6 +111,16 @@ namespace UniReg.Migrations
                 name: "IX_CourseStudent_StudentId",
                 table: "CourseStudent",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DepartmentCourse_CourseId",
+                table: "DepartmentCourse",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DepartmentCourse_DepartmentId",
+                table: "DepartmentCourse",
+                column: "DepartmentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -76,10 +129,16 @@ namespace UniReg.Migrations
                 name: "CourseStudent");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "DepartmentCourse");
 
             migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
         }
     }
 }

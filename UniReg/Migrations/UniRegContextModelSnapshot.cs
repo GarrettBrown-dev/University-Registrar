@@ -21,7 +21,7 @@ namespace UniReg.Migrations
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("CourseName");
 
                     b.HasKey("CourseId");
 
@@ -35,9 +35,11 @@ namespace UniReg.Migrations
 
                     b.Property<int>("CourseId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("CourseName");
 
                     b.Property<int>("StudentId");
+
+                    b.Property<string>("StudentName");
 
                     b.HasKey("CourseStudentId");
 
@@ -53,7 +55,7 @@ namespace UniReg.Migrations
                     b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("DepartmentName");
 
                     b.HasKey("DepartmentId");
 
@@ -67,9 +69,11 @@ namespace UniReg.Migrations
 
                     b.Property<int>("CourseId");
 
+                    b.Property<string>("CourseName");
+
                     b.Property<int>("DepartmentId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("DepartmentName");
 
                     b.HasKey("DepartmentCourseId");
 
@@ -85,7 +89,7 @@ namespace UniReg.Migrations
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("StudentName");
 
                     b.HasKey("StudentId");
 
