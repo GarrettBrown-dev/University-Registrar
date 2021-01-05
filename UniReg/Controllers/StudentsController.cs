@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using UniReg.Models;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UniReg.Controllers
 {
@@ -17,7 +18,8 @@ namespace UniReg.Controllers
 
         public ActionResult Index()
         {
-            return View(_db.Students.ToList());
+            List<Student> model = _db.Students.ToList();
+            return View(model);
         }
 
         public ActionResult Create()
@@ -27,7 +29,7 @@ namespace UniReg.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Students student, int CourseId)
+        public ActionResult Create(Student student, int CourseId)
         {
             _db.Students.Add(student);
             if (CourseId != 0)
@@ -60,20 +62,20 @@ namespace UniReg.Controllers
         {
             var thisStudent = _db.Students
             .Include(student => student.Courses)
-            .ThenInclude(join => join.Courses)
+            .ThenInclude(join => join.Course)
             .FirstOrDefault(student => student.StudentId == id);
             return View(thisStudent);
         }
 
         public ActionResult Edit(int id)
         {
-            var thisStudent = _db.Students.FirstOrDefault(Students => students.StudentId == id);
+            var thisStudent = _db.Students.FirstOrDefault(students => students.StudentId == id);
             ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
             return View(thisStudent);
         }
 
         [HttpPost]
-        public ActionResult Edit(Student student)
+        public ActionResult Edit(Student student, int CourseId)
         {
             if (CourseId != 0)
             {
@@ -102,7 +104,7 @@ namespace UniReg.Controllers
         [HttpPost]
         public ActionResult DeleteCourse(int joinId)
         {
-            var joinEntry = _db.CourseStudent.FirstOrDefault(joinEntry => joinEntry.CourseStudentId == joinId);
+            var joinEntry = _db.CourseStudent.FirstOrDefault(entry => entry.CourseStudentId == joinId);
             _db.CourseStudent.Remove(joinEntry);
             _db.SaveChanges();
             return RedirectToAction("Index");

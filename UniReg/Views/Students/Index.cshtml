@@ -1,0 +1,24 @@
+@{
+  Layout = "_Layout";
+}
+
+@using UniReg.Models;
+@model IEnumerable<UniReg.Models.Student>
+
+@if (Model.Any())
+{
+  <ul>
+    @foreach (Student student in Model)
+    {
+      <li>@Html.ActionLink($"{student.Name}", "Details", new { id = student.StudentId })</li>
+    }
+  </ul>
+}
+else
+{
+  <h3>No items have been added yet!</h3>
+}
+
+<p>@Html.ActionLink("Add new student", "Create")</p>
+
+<p>@Html.ActionLink("Home", "Index", "Home")</p>
