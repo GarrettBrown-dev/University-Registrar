@@ -6,10 +6,10 @@ namespace UniReg.Models
     {
         public Department()
         {
-            this.Courses = new HashSet<DepartmentCourseStudent>();
+            this.Courses = new HashSet<DepartmentCourse>();
         }
         public int DepartmentId { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<DepartmentCourseStudent> Courses { get; set; }
+        public string DepartmentName { get; set; }
+        public virtual ICollection<DepartmentCourse> Courses { get; set; }
     }
 }

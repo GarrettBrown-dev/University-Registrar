@@ -43,7 +43,7 @@ namespace UniReg.Controllers
         public ActionResult AddCourse(int id)
         {
             var thisStudent = _db.Students.FirstOrDefault(students => students.StudentId == id);
-            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseName");
             return View(thisStudent);
         }
 

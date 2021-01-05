@@ -6,7 +6,7 @@
 
 <h2>Department Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+<h3>@Html.DisplayNameFor(model => model.DepartmentName): @Html.DisplayFor(model => model.DepartmentName)</h3>
 
 @if (@Model.Courses.Count == 0)
 {
@@ -18,15 +18,15 @@ else
     <ul>
         @foreach (var join in Model.Courses)
         {
-            <li>@join.Course.Name</li>
+            <li>@join.Course.CourseName</li>
         }
     </ul>
 }
 
-<p>@Html.ActionLink("Back to courses", "Index")</p>
+<p>@Html.ActionLink("Back to departments", "Index")</p>
 
 <p>@Html.ActionLink("Add a course to this department.", "AddCourse")</p>
 
-<p>@Html.ActionLink("Edit Course", "Edit", new { id = Model.DepartmentId })</p>
+<p>@Html.ActionLink("Edit Department", "Edit", new { id = Model.DepartmentId })</p>
 
-<p>@Html.ActionLink("Delete Course", "Delete", new { id = Model.DepartmentId })</p>
+<p>@Html.ActionLink("Delete Department", "Delete", new { id = Model.DepartmentId })</p>

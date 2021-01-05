@@ -9,7 +9,8 @@ namespace UniReg.Models
             this.Students = new HashSet<CourseStudent>();
         }
         public int CourseId { get; set; }
-        public string Name { get; set; }
+        public string CourseName { get; set; }
         public virtual ICollection<CourseStudent> Students { get; set; }
+
     }
 }

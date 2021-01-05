@@ -38,7 +38,7 @@ namespace UniReg.Controllers
         public ActionResult AddCourse(int id)
         {
             var thisDepartment = _db.Departments.FirstOrDefault(departments => departments.DepartmentId == id);
-            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseName");
             return View(thisDepartment);
         }
 
@@ -87,6 +87,15 @@ namespace UniReg.Controllers
         {
             var thisDepartment = _db.Departments.FirstOrDefault(department => department.DepartmentId == id);
             _db.Departments.Remove(thisDepartment);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCourse(int joinId)
+        {
+            var joinEntry = _db.DepartmentCourse.FirstOrDefault(entry => entry.DepartmentCourseId == joinId);
+            _db.DepartmentCourse.Remove(joinEntry);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
